@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,22 +39,8 @@ import kotlin.collections.ArrayList
 @RequiresApi(Build.VERSION_CODES.N)
 class MovieListFragment : Fragment() {
 
-    private val movies: ArrayList<Movie> = arrayListOf(
-//        Movie("/ld7V9BjMk2xtiBNcR8savyyk5ca.jpg",
-//            "/tzYkC0vqX8Dokuwynhz1lnWWgWT.jpg",
-//            "Miss Peregrine's Home for Peculiar Children",
-//            SimpleDateFormat("dd-MM-yyyy").parse("2016-09-28"),
-//            6.7,
-//            "A teenager finds himself transported to an island where he must help protect a group of orphans with special powers from creatures intent on destroying them."
-//        ),
-//        Movie("/ld7V9BjMk2xtiBNcR8savyyk5ca.jpg",
-//            "/tzYkC0vqX8Dokuwynhz1lnWWgWT.jpg",
-//            "Miss Peregrine's Home for Peculiar Children",
-//            SimpleDateFormat("dd-MM-yyyy").parse("2016-09-28"),
-//            6.7,
-//            "A teenager finds himself transported to an island where he must help protect a group of orphans with special powers from creatures intent on destroying them."
-//        )
-    )
+    private lateinit var navController: NavController
+    private val movies: ArrayList<Movie> = arrayListOf()
 
     private lateinit var moviesAdapter: MoviesAdapter
     private val moviesViewmodel: MovieViewmodel by activityViewModels()
@@ -68,6 +55,7 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
         moviesAdapter = MoviesAdapter(movies, ::onClick)
 
         rv_movies.layoutManager = GridLayoutManager(
@@ -99,6 +87,8 @@ class MovieListFragment : Fragment() {
         }
     }
     fun onClick(movie: Movie) {
-
+        println(movie.title)
+        moviesViewmodel.setSelectedMovie(movie)
+        navController.navigate(R.id.action_MovieListFragment_to_MovieDetailFragment)
     }
 }

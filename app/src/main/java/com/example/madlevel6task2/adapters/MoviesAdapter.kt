@@ -23,7 +23,9 @@ class MoviesAdapter(
             }
         }
 
-        fun bind(movie: Movie) {
+        fun bind(movie: Movie, position: Int) {
+            itemView.tvRanking.text = "${(movies.indexOf(movie) + 1)}."
+
             Glide.with(context).load(movie.getPosterURL()).into(itemView.iv_movie_poster)
         }
 
@@ -42,6 +44,6 @@ class MoviesAdapter(
     override fun getItemCount(): Int = movies.size
 
     override fun onBindViewHolder(holder: MoviesAdapter.ViewHolder, position: Int) {
-        holder.bind(movies[position])
+        holder.bind(movies[position], position)
     }
 }

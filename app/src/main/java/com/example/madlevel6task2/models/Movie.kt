@@ -20,5 +20,6 @@ data class Movie(
 ) {
 
     fun getPosterURL() = "https://image.tmdb.org/t/p/w200${poster_path}"
+    fun getBackdropURL() = "https://image.tmdb.org/t/p/w500${backdrop_path}"
 
 }
