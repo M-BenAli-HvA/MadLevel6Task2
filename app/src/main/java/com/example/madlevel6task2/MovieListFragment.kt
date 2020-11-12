@@ -11,14 +11,23 @@ import android.widget.Button
 import android.widget.GridLayout
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madlevel6task2.adapters.MoviesAdapter
 import com.example.madlevel6task2.models.Movie
+import com.example.madlevel6task2.repository.MovieRepository
 import kotlinx.android.synthetic.main.fragment_movie_list.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import java.time.Year
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
@@ -47,10 +56,11 @@ class MovieListFragment : Fragment() {
     )
 
     private lateinit var moviesAdapter: MoviesAdapter
+    private val moviesViewmodel: MovieViewmodel by activityViewModels()
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
@@ -60,15 +70,34 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         moviesAdapter = MoviesAdapter(movies, ::onClick)
 
-                rv_movies.layoutManager = GridLayoutManager(activity,
-            2)
+        rv_movies.layoutManager = GridLayoutManager(
+            activity,
+            2
+        )
         rv_movies.adapter = moviesAdapter
+
+        initViews()
+        observeMovies()
+    }
+
+    fun observeMovies() {
+        moviesViewmodel.movies.observe(viewLifecycleOwner, Observer {
+            movies.clear()
+            movies.addAll(it)
+            moviesAdapter.notifyDataSetChanged()
+        })
+    }
+
+    fun submit() {
+        val year = etYear.text.toString().toInt()
+        moviesViewmodel.getMoviesByYear(year)
     }
 
     fun initViews() {
-
+        btn_submit.setOnClickListener {
+            submit()
+        }
     }
-
     fun onClick(movie: Movie) {
 
     }
