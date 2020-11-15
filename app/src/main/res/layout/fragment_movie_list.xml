@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MovieListFragment">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/btn_submit"
         android:layout_width="82dp"
         android:layout_height="45dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
+        android:background="@color/colorPrimary"
         android:text="@string/submit"
+        android:textColor="#FFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,12 +22,9 @@
         android:id="@+id/til_etYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_submit"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -48,9 +47,11 @@
         android:layout_marginBottom="31dp"
         android:text="@string/most_popular_movies"
         app:layout_constraintBottom_toTopOf="@+id/rv_movies"
+        app:layout_constraintEnd_toStartOf="@+id/til_etYear"
+        app:layout_constraintHorizontal_bias="0.187"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.01" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_movies"
@@ -61,7 +62,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_etYear"
- />
+        app:layout_constraintTop_toBottomOf="@+id/til_etYear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
